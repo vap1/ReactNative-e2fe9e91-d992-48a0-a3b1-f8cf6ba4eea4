@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, FlatList } from 'react-native';
 import { User } from '../types/UserTypes';
 
 interface SearchResultsProps {
@@ -10,14 +10,21 @@ interface SearchResultsProps {
 const SearchResults: React.FC<SearchResultsProps> = ({ searchResults }) => {
   return (
     <View>
-      {searchResults.map((user) => (
-        <View key={user.userId}>
-          <Text>{user.firstName} {user.lastName}</Text>
-          <Text>Email: {user.email}</Text>
-          <Text>Phone: {user.phone}</Text>
-          <Text>Address: {user.address}</Text>
-        </View>
-      ))}
+      <Text>Search Results:</Text>
+      <FlatList
+        data={searchResults}
+        keyExtractor={(item) => item.userId}
+        renderItem={({ item }) => (
+          <View>
+            <Text>User ID: {item.userId}</Text>
+            <Text>First Name: {item.firstName}</Text>
+            <Text>Last Name: {item.lastName}</Text>
+            <Text>Email: {item.email}</Text>
+            <Text>Phone: {item.phone}</Text>
+            <Text>Address: {item.address}</Text>
+          </View>
+        )}
+      />
     </View>
   );
 };
