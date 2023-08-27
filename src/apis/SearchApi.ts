@@ -1,24 +1,14 @@
 
+import axios from 'axios';
 import { SearchRequest, SearchResponse } from '../types/UserTypes';
 
-const searchApi = async (request: SearchRequest): Promise<SearchResponse> => {
+const BASE_URL = 'http://your-api-base-url.com'; // Replace with your actual API base URL
+
+export const searchApi = async (request: SearchRequest): Promise<SearchResponse> => {
   try {
-    const response = await fetch(`/search/${request.keyword}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Search failed');
-    }
-
-    const data: SearchResponse = await response.json();
-    return data;
+    const response = await axios.get(`${BASE_URL}/search/${request.keyword}`);
+    return response.data;
   } catch (error) {
-    throw new Error('Search failed');
+    throw new Error('Failed to perform search');
   }
 };
-
-export default searchApi;
