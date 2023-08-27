@@ -1,44 +1,32 @@
 
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
-import { SearchRequest, SearchResponse } from '../types/SearchTypes';
-import { search } from '../apis/SearchApi';
+import { View, TextInput, Button } from 'react-native';
+import { User } from '../types/UserTypes';
+import searchApi from '../apis/SearchApi';
+import SearchResults from '../components/SearchResults';
 
 const SearchScreen: React.FC = () => {
-  const [keyword, setKeyword] = useState('');
-  const [searchResults, setSearchResults] = useState<SearchResponse[]>([]);
+  const [keyword, setKeyword] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<User[]>([]);
 
   const handleSearch = async () => {
     try {
-      const request: SearchRequest = {
-        keyword: keyword,
-      };
-      const response = await search(request);
+      const response = await searchApi({ keyword });
       setSearchResults(response.searchResults);
     } catch (error) {
-      console.error('Error searching:', error);
+      // Handle error or show error message
     }
   };
 
   return (
     <View>
-      <Text>Search Screen</Text>
       <TextInput
-        placeholder="Enter keyword"
+        placeholder="Keyword"
         value={keyword}
         onChangeText={setKeyword}
       />
       <Button title="Search" onPress={handleSearch} />
-      {searchResults.map((result, index) => (
-        <View key={index}>
-          <Text>{result.userId}</Text>
-          <Text>{result.firstName}</Text>
-          <Text>{result.lastName}</Text>
-          <Text>{result.email}</Text>
-          <Text>{result.phone}</Text>
-          <Text>{result.address}</Text>
-        </View>
-      ))}
+      <SearchResults searchResults={searchResults} />
     </View>
   );
 };
