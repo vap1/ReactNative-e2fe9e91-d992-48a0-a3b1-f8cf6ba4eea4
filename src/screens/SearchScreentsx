@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
 import { User } from '../types/UserTypes';
 import { SearchRequest, SearchResponse } from '../types/SearchTypes';
@@ -8,15 +8,11 @@ import SearchResults from '../components/SearchResults';
 
 const SearchScreen: React.FC = () => {
   const [keyword, setKeyword] = useState('');
-
   const [searchResults, setSearchResults] = useState<User[]>([]);
 
   const handleSearch = async () => {
     try {
-      const request: SearchRequest = {
-        keyword: keyword,
-      };
-
+      const request: SearchRequest = { keyword };
       const response: SearchResponse = await SearchApi.search(request);
       setSearchResults(response.searchResults);
     } catch (error) {
