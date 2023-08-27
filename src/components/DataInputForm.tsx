@@ -2,13 +2,9 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
 import { User } from '../types/UserTypes';
-import { dataInputApi } from '../apis/DataInputApi';
+import DataInputApi from '../apis/DataInputApi';
 
-type DataInputFormProps = {
-  onSubmit: () => void;
-};
-
-const DataInputForm: React.FC<DataInputFormProps> = ({ onSubmit }) => {
+const DataInputForm: React.FC = () => {
   const [user, setUser] = useState<User>({
     userId: '',
     firstName: '',
@@ -27,9 +23,8 @@ const DataInputForm: React.FC<DataInputFormProps> = ({ onSubmit }) => {
 
   const handleSubmit = async () => {
     try {
-      await dataInputApi({ user });
+      await DataInputApi.dataInput({ user });
       Alert.alert('Success', 'Data input successful');
-      onSubmit();
     } catch (error) {
       Alert.alert('Error', 'Failed to perform data input');
     }
