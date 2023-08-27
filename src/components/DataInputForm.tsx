@@ -1,10 +1,14 @@
 
 import React, { useState } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput, Button, Alert } from 'react-native';
 import { User } from '../types/UserTypes';
-import dataInputApi from '../apis/DataInputApi';
+import { dataInputApi } from '../apis/DataInputApi';
 
-const DataInputForm: React.FC = () => {
+type DataInputFormProps = {
+  onSubmit: () => void;
+};
+
+const DataInputForm: React.FC<DataInputFormProps> = ({ onSubmit }) => {
   const [user, setUser] = useState<User>({
     userId: '',
     firstName: '',
@@ -14,19 +18,20 @@ const DataInputForm: React.FC = () => {
     address: '',
   });
 
-  const handleInputChange = (field: keyof User, value: string) => {
+  const handleInputChange = (key: keyof User, value: string) => {
     setUser((prevUser) => ({
       ...prevUser,
-      [field]: value,
+      [key]: value,
     }));
   };
 
   const handleSubmit = async () => {
     try {
       await dataInputApi({ user });
-      // Handle success or show confirmation message
+      Alert.alert('Success', 'Data input successful');
+      onSubmit();
     } catch (error) {
-      // Handle error or show error message
+      Alert.alert('Error', 'Failed to perform data input');
     }
   };
 
