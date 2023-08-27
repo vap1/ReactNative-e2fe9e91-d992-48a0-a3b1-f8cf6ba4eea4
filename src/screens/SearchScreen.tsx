@@ -1,8 +1,8 @@
 
-import React, { useState, useEffect } from 'react';
-import { View, TextInput, Button, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, TextInput, Button, Alert } from 'react-native';
 import { User } from '../types/UserTypes';
-import SearchApi from '../apis/SearchApi';
+import { searchApi } from '../apis/SearchApi';
 import SearchResults from '../components/SearchResults';
 
 const SearchScreen: React.FC = () => {
@@ -11,7 +11,7 @@ const SearchScreen: React.FC = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await SearchApi.search({ keyword });
+      const response = await searchApi({ keyword });
       setSearchResults(response.searchResults);
     } catch (error) {
       Alert.alert('Error', 'Failed to perform search');
@@ -19,9 +19,10 @@ const SearchScreen: React.FC = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <TextInput
-        placeholder="Keyword"
+        style={styles.input}
+        placeholder="Enter keyword"
         value={keyword}
         onChangeText={setKeyword}
       />
@@ -30,5 +31,21 @@ const SearchScreen: React.FC = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  input: {
+    width: '80%',
+    height: 40,
+    borderWidth: 1,
+    borderColor: 'gray',
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+});
 
 export default SearchScreen;
