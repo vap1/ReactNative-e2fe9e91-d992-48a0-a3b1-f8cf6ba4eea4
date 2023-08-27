@@ -2,15 +2,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { DataInputScreen } from './screens/DataInputScreen';
-import { SearchScreen } from './screens/SearchScreen';
+import DataInputScreen from './screens/DataInputScreen';
+import SearchScreen from './screens/SearchScreen';
 
-export type RootStackParamList = {
-  DataInput: undefined;
-  Search: undefined;
-};
-
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator();
 
 const App: React.FC = () => {
   return (
