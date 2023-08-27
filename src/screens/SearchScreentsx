@@ -2,17 +2,22 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
 import { User } from '../types/UserTypes';
-import { searchApi, SearchRequest, SearchResponse } from '../apis/SearchApi';
+import { SearchRequest, SearchResponse } from '../types/SearchTypes';
+import SearchApi from '../apis/SearchApi';
 import SearchResults from '../components/SearchResults';
 
 const SearchScreen: React.FC = () => {
   const [keyword, setKeyword] = useState('');
+
   const [searchResults, setSearchResults] = useState<User[]>([]);
 
   const handleSearch = async () => {
     try {
-      const request: SearchRequest = { keyword };
-      const response: SearchResponse = await searchApi(request);
+      const request: SearchRequest = {
+        keyword: keyword,
+      };
+
+      const response: SearchResponse = await SearchApi.search(request);
       setSearchResults(response.searchResults);
     } catch (error) {
       Alert.alert('Error', 'Failed to perform search');
@@ -22,7 +27,7 @@ const SearchScreen: React.FC = () => {
   return (
     <View>
       <TextInput
-        placeholder="Enter keyword"
+        placeholder="Keyword"
         value={keyword}
         onChangeText={setKeyword}
       />
