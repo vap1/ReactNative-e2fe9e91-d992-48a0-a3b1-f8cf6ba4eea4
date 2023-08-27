@@ -3,9 +3,9 @@ import React from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { User } from '../types/UserTypes';
 
-interface SearchResultsProps {
+type SearchResultsProps = {
   searchResults: User[];
-}
+};
 
 const SearchResults: React.FC<SearchResultsProps> = ({ searchResults }) => {
   return (
