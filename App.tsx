@@ -2,8 +2,8 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import DataInputScreen from './src/screens/DataInputScreen';
-import SearchScreen from './src/screens/SearchScreen';
+import DataInputScreen from './screens/DataInputScreen';
+import SearchScreen from './screens/SearchScreen';
 
 const Stack = createStackNavigator();
 
