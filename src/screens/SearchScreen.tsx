@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
 import { User } from '../types/UserTypes';
 import SearchApi from '../apis/SearchApi';
@@ -7,7 +7,6 @@ import SearchResults from '../components/SearchResults';
 
 const SearchScreen: React.FC = () => {
   const [keyword, setKeyword] = useState('');
-
   const [searchResults, setSearchResults] = useState<User[]>([]);
 
   const handleSearch = async () => {
